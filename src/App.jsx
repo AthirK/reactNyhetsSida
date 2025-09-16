@@ -4,6 +4,7 @@ import CreateArticleForm from "@/components/createArticleForm";
 
 function App() {
   const [dummyArticles, setDummyArticles] = useState([]);
+  const [userArticles, setUserArticles] = useState([]);
 
   // useEffect med en tom beroende-array [] körs endast en gång när komponenten laddas
   useEffect(() => {
@@ -20,12 +21,36 @@ function App() {
     fetchArticlesFromDummyJSON();
   }, []); // <-- Denna tomma array säkerställer att koden bara körs en gång
 
+  const handleAddArticle = (newArticle) => {
+    setUserArticles([newArticle, ...userArticles]);
+  };
+
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-2xl font-bold mt-4">Nyhetssida med React</h1>
-      <CreateArticleForm />
+      <h1 className="text-2xl font-bold mt-4">Nyhetssida</h1>
+
+      {/* Skapa ny artikel */}
+      <CreateArticleForm onAddArticle={handleAddArticle} />
 
       <div className="mt-8 space-y-4 w-4/5">
+        {/* user artiklar */}
+        {userArticles.map((article) => (
+          <Card key={article.id}>
+            <CardHeader>
+              <CardTitle>{article.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>{article.body}</p>
+              <small>{article.date}</small>
+              <div className="mt-4 flex gap-2">
+                <span>👍 {article.reactions.likes}</span>
+                <span>👎 {article.reactions.dislikes}</span>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+
+        {/* dummy artiklar */}
         {dummyArticles.map((dummyArticle) => (
           <Card key={dummyArticle.id}>
             <CardHeader>

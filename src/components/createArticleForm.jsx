@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function CreateArticleForm() {
+function CreateArticleForm({ onAddArticle }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
@@ -16,7 +16,7 @@ function CreateArticleForm() {
       reactions: { likes: 0, dislikes: 0 },
     };
 
-    console.log("Ny artikel skapad:", newArticle);
+    onAddArticle(newArticle); // skickar upp den nya artikeln till föräldrakomponenten
 
     // Rensa formuläret
     setTitle("");
@@ -24,7 +24,7 @@ function CreateArticleForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded">
+    <form onSubmit={handleSubmit} className="p-4 border rounded w-4/5 mt-4">
       <div>
         <label>Titel</label>
         <input
@@ -36,7 +36,7 @@ function CreateArticleForm() {
         />
       </div>
 
-      <div>
+      <div className="mt-2">
         <label>Text</label>
         <textarea
           value={body}
@@ -46,7 +46,10 @@ function CreateArticleForm() {
         />
       </div>
 
-      <button type="submit" className="mt-2 bg-blue-500 text-white px-3 py-1 rounded">
+      <button
+        type="submit"
+        className="mt-2 bg-blue-500 text-white px-3 py-1 rounded"
+      >
         Skapa artikel
       </button>
     </form>
