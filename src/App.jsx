@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import CreateArticleForm from "@/components/createArticleForm";
 
 function App() {
   const [dummyArticles, setDummyArticles] = useState([]);
@@ -21,6 +22,9 @@ function App() {
 
   return (
     <div className="flex flex-col items-center">
+      <h1 className="text-2xl font-bold mt-4">Nyhetssida med React</h1>
+      <CreateArticleForm />
+
       <div className="mt-8 space-y-4 w-4/5">
         {dummyArticles.map((dummyArticle) => (
           <Card key={dummyArticle.id}>
