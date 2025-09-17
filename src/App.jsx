@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CreateArticleForm from "@/components/createArticleForm";
+import { Toaster, toast } from "sonner";
 
 function App() {
   const [dummyArticles, setDummyArticles] = useState([]);
-  const [userArticles, setUserArticles] = useState([]);
+  const [userArticles, setUserArticles] = useState(() => {
+    const saved = localStorage.getItem("userArticles");
+    return saved ? JSON.parse(saved) : [];
+  });
 
   // useEffect med en tom beroende-array [] körs endast en gång när komponenten laddas
   useEffect(() => {
@@ -21,12 +25,34 @@ function App() {
     fetchArticlesFromDummyJSON();
   }, []); // <-- Denna tomma array säkerställer att koden bara körs en gång
 
+  // Hämtar userArticles från localStorage
+  useEffect(() => {
+    const savedArticles = localStorage.getItem("userArticles");
+    if (savedArticles) {
+      setUserArticles(JSON.parse(savedArticles));
+    }
+  }, []);
+
+  // Sparar userArticles till localStorage
+  useEffect(() => {
+    localStorage.setItem("userArticles", JSON.stringify(userArticles));
+  }, [userArticles]);
+
   const handleAddArticle = (newArticle) => {
     setUserArticles([newArticle, ...userArticles]);
+    toast.success("Artikel skapad!");
+  };
+
+  const handleDeleteArticle = (id) => {
+    setUserArticles(userArticles.filter((a) => a.id !== id));
+    toast.error("Artikel raderad!");
   };
 
   return (
     <div className="flex flex-col items-center">
+
+      <Toaster position="top-center" richColors /> {/* Toast container */}
+      
       <h1 className="text-2xl font-bold mt-4">Nyhetssida</h1>
 
       {/* Skapa ny artikel */}
@@ -36,8 +62,14 @@ function App() {
         {/* user artiklar */}
         {userArticles.map((article) => (
           <Card key={article.id}>
-            <CardHeader>
+            <CardHeader className="flex justify-between items-center">
               <CardTitle>{article.title}</CardTitle>
+              <button
+                onClick={() => handleDeleteArticle(article.id)}
+                className="bg-red-500 text-white px-2 py-1 rounded text-sm"
+              >
+                Radera
+              </button>
             </CardHeader>
             <CardContent>
               <p>{article.body}</p>
@@ -67,6 +99,7 @@ function App() {
         ))}
       </div>
     </div>
+    
   );
 }
 
