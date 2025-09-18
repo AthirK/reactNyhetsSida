@@ -5,7 +5,7 @@ import ArticleDetail from "./pages/ArticleDetail";
 
 function App() {
   return (
-    <div>
+    <div className="bg-gray-400 min-h-screen">
       <Toaster position="top-center" richColors />
       <Routes>
         <Route path="/" element={<Home />} />

@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 function ArticleDetail() {
   const { id } = useParams();
@@ -45,12 +46,12 @@ function ArticleDetail() {
   if (!article) {
     return (
       <div className="p-6">
-        <button
+        <Button
           onClick={() => navigate("/")}
-          className="mb-4 bg-gray-300 px-3 py-1 rounded"
+          className="mb-4 bg-blue-500 px-3 py-1 rounded cursor-pointer"
         >
           ← Back to Home
-        </button>
+        </Button>
         <p>Article not found.</p>
       </div>
     );
@@ -58,12 +59,12 @@ function ArticleDetail() {
 
   return (
     <div className="flex flex-col items-center p-6">
-      <button
+      <Button
         onClick={() => navigate("/")}
-        className="self-start mb-4 bg-gray-300 px-3 py-1 rounded"
+        className="self-start mb-4 bg-blue-500 px-3 py-1 rounded cursor-pointer"
       >
         ← Back to Home
-      </button>
+      </Button>
 
       <Card className="w-3/4">
         <CardHeader>
@@ -74,18 +75,18 @@ function ArticleDetail() {
           <small>{new Date(article.date).toLocaleString()}</small>
 
           <div className="mt-6 flex gap-4">
-            <button
+            <Button
               onClick={handleLike}
-              className="bg-green-500 text-white px-3 py-1 rounded"
+              className="bg-green-500 text-white px-3 py-1 rounded cursor-pointer"
             >
               👍 {article.reactions.likes}
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={handleDislike}
-              className="bg-red-500 text-white px-3 py-1 rounded"
+              className="bg-red-500 text-white px-3 py-1 rounded cursor-pointer"
             >
               👎 {article.reactions.dislikes}
-            </button>
+            </Button>
           </div>
         </CardContent>
       </Card>

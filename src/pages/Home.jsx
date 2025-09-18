@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import CreateArticleForm from "@/components/CreateArticleForm";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 function Home() {
     const [dummyArticles, setDummyArticles] = useState([]);
@@ -42,7 +43,7 @@ function Home() {
 
     return (
         <div className="flex flex-col items-center">
-            <h1 className="text-2xl font-bold mt-4">Nyhetssida</h1>
+            <h1 className="text-2xl font-bold mt-4">News page</h1>
 
             <CreateArticleForm onAddArticle={handleAddArticle} />
 
@@ -56,12 +57,12 @@ function Home() {
                                     {article.title}
                                 </Link>
                             </CardTitle>
-                            <button
+                            <Button
                                 onClick={() => handleDeleteArticle(article.id)}
-                                className="bg-red-500 text-white px-2 py-1 rounded text-sm"
+                                className="bg-red-500 text-white px-2 py-1 rounded text-sm cursor-pointer"
                             >
                                 Delete
-                            </button>
+                            </Button>
                         </CardHeader>
                         <CardContent>
                             <p>{article.body}</p>
