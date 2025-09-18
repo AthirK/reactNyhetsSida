@@ -7,7 +7,7 @@ function CreateArticleForm({ onAddArticle }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Skapa en artikel som objekt
+    // Create article object
     const newArticle = {
       id: crypto.randomUUID(),
       title,
@@ -16,9 +16,9 @@ function CreateArticleForm({ onAddArticle }) {
       reactions: { likes: 0, dislikes: 0 },
     };
 
-    onAddArticle(newArticle); // skickar upp den nya artikeln till föräldrakomponenten
+    onAddArticle(newArticle); // Notify parent
 
-    // Rensa formuläret
+    // Clear form
     setTitle("");
     setBody("");
   };
